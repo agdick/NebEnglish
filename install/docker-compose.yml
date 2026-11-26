@@ -1,0 +1,15 @@
+# Nebula — add this service to the docker-compose.yml where you have Jellyfin and/or Emby.
+# It finds every Jellyfin and Emby on the machine by itself, adds the carousel, and re-adds it after
+# every update. Nothing to change: copy, paste and run "docker compose up -d".
+services:
+  nebula:
+    image: docker:cli
+    container_name: nebula
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JELLYFIN_API_KEY=   # optional: Jellyfin API key → also adds the theme to "Custom CSS"
+      - EMBY_API_KEY=       # optional: same for Emby
+      - NEBULA_OPTIONS=     # optional (Jellyfin): e.g. cabecera-minima,acento-coral
+    entrypoint: ["sh", "-c", "apk add -q --no-cache bash curl && curl -fsSL https://raw.githubusercontent.com/agdick/NebEnglish/main/install/inject-docker.sh | bash -s -- auto --watch"]

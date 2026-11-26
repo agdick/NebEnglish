@@ -1,0 +1,2 @@
+/* Oculta el carrusel destacado de la portada (si instalaste nebula-home.js). */
+.nbHero { display: none !important; }
